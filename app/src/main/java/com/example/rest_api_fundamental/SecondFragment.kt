@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.rest_api_fundamental.posts.api.PostApi
@@ -34,27 +35,8 @@ class SecondFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
 
-        val gson = GsonBuilder()
-            .create()
 
-        val retrofit = Retrofit.Builder()
-            .baseUrl("https://api.github.com/")
-            .addConverterFactory(GsonConverterFactory.create(gson))
-            .build()
 
-        var getPost = retrofit.create(PostApi::class.java)
-        var postCall = getPost.post
-        postCall.enqueue(object : Callback<Post>{
-            override fun onFailure(call: Call<Post>, t: Throwable) {
-
-            }
-
-            override fun onResponse(call: Call<Post>, response: Response<Post>) {
-                var title = response.body()!!.title
-                Log.d("secondFragment",title)
-            }
-
-        })
 
         return inflater.inflate(R.layout.fragment_second, container, false)
     }
@@ -65,5 +47,28 @@ class SecondFragment : Fragment() {
         view.findViewById<Button>(R.id.button_second).setOnClickListener {
             findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
         }
+
+        val gson = GsonBuilder()
+            .create()
+
+        val retrofit = Retrofit.Builder()
+            .baseUrl("https://jsonplaceholder.typicode.com/")
+            .addConverterFactory(GsonConverterFactory.create(gson))
+            .build()
+
+        var postApi = retrofit.create(PostApi::class.java)
+        var postCall = postApi.post
+        postCall.enqueue(object : Callback<Post>{
+            override fun onFailure(call: Call<Post>, t: Throwable) {
+
+            }
+
+            override fun onResponse(call: Call<Post>, response: Response<Post>) {
+                var title = response.body()!!.title
+                Log.d("SecondFragment", "tittle is : " + title)
+                view.findViewById<TextView>(R.id.textview_second).text = title
+            }
+
+        })
     }
 }
