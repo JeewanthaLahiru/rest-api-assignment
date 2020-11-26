@@ -12,10 +12,13 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.rest_api_fundamental.posts.ListAdapter
 import com.example.rest_api_fundamental.posts.api.PostApi
 import com.example.rest_api_fundamental.posts.model.Post
 import com.google.gson.GsonBuilder
+import kotlinx.android.synthetic.main.fragment_second.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -23,6 +26,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.gson.GsonConverterFactory.create
 import java.net.URI.create
+import android.widget.ListAdapter as ListAdapter1
 
 
 /**
@@ -62,6 +66,11 @@ class SecondFragment : Fragment() {
 
         var recyclerViewList: RecyclerView
         recyclerViewList = view.findViewById<RecyclerView>(R.id.recyclerView)
+
+        recyclerViewList.adapter = ListAdapter(data)
+        recyclerViewList.layoutManager = LinearLayoutManager(context)
+        recyclerViewList.setHasFixedSize(true)
+
 
 
 
