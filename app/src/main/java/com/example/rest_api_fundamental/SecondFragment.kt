@@ -5,6 +5,7 @@ import android.net.DnsResolver
 import android.os.Bundle
 import android.renderscript.ScriptIntrinsicBLAS.create
 import android.util.Log
+import android.util.Log.d
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -63,8 +64,25 @@ class SecondFragment : Fragment() {
             findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
         }
 
+        val retrofit = Retrofit.Builder()
+            .baseUrl("https://jsonplaceholder.typicode.com/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
 
-        var recyclerViewList: RecyclerView
+        val api = retrofit.create(PostApi::class.java)
+        api.fetchAllData().enqueue(object : Callback<List<Post>>{
+            override fun onResponse(call: Call<List<Post>>, response: Response<List<Post>>) {
+                showData(response.body()!!)
+            }
+            override fun onFailure(call: Call<List<Post>>, t: Throwable) {
+                d("failure","on Failure")
+            }
+
+
+        })
+
+
+        /*var recyclerViewList: RecyclerView
         recyclerViewList = view.findViewById<RecyclerView>(R.id.recyclerView)
 
         recyclerViewList.adapter = ListAdapter(data)
@@ -82,6 +100,7 @@ class SecondFragment : Fragment() {
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
 
+
         var postApi = retrofit.create(PostApi::class.java)
         var postCall = postApi.post
         postCall.enqueue(object : Callback<Post>{
@@ -95,7 +114,14 @@ class SecondFragment : Fragment() {
                 //view.findViewById<TextView>(R.id.textview_second).text = title
             }
 
-        })
+        })*/
+    }
+
+    private fun showData(users:List<Post>){
+        recyclerView.apply {
+            layoutManager = LinearLayoutManager(this.context)
+            adapter = ListAdapter(users)
+        }
     }
 }
 

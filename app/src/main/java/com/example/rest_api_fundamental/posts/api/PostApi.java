@@ -10,5 +10,7 @@ import retrofit2.http.GET;
 public interface PostApi {
 
     @GET("/posts")
-    Call<List<Post>> getPost();
+    Call<List<Post>> fetchAllData();
+    //fun fetchAllData : Call<List<Post>>
+    //Call<List<Post>> getPost();
 }
