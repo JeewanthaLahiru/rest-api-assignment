@@ -12,6 +12,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
 import com.example.rest_api_fundamental.posts.api.PostApi
 import com.example.rest_api_fundamental.posts.model.Post
 import com.google.gson.GsonBuilder
@@ -28,6 +29,16 @@ import java.net.URI.create
  * A simple [Fragment] subclass as the second destination in the navigation.
  */
 class SecondFragment : Fragment() {
+
+    private val data = listOf(
+        Post(1,1,"title1","body1"),
+        Post(2,2,"title2","body2"),
+        Post(3,3,"title3","body3"),
+        Post(4,4,"title4","body4"),
+        Post(5,5,"title5","body5"),
+        Post(6,6,"title6","body6"),
+        Post(7,7,"title7","body7")
+    )
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -48,6 +59,12 @@ class SecondFragment : Fragment() {
             findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
         }
 
+
+        var recyclerViewList: RecyclerView
+        recyclerViewList = view.findViewById<RecyclerView>(R.id.recyclerView)
+
+
+
         val gson = GsonBuilder()
             .create()
 
@@ -66,9 +83,13 @@ class SecondFragment : Fragment() {
             override fun onResponse(call: Call<Post>, response: Response<Post>) {
                 var title = response.body()!!.title
                 Log.d("SecondFragment", "tittle is : " + title)
-                view.findViewById<TextView>(R.id.textview_second).text = title
+                //view.findViewById<TextView>(R.id.textview_second).text = title
             }
 
         })
     }
+}
+
+private fun <T> Call<T>.enqueue(callback: Callback<Post>) {
+
 }
