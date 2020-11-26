@@ -86,7 +86,7 @@ class SecondFragment : Fragment() {
         var postCall = postApi.post
         postCall.enqueue(object : Callback<Post>{
             override fun onFailure(call: Call<Post>, t: Throwable) {
-
+                Log.v("Retrofit","Call failed")
             }
 
             override fun onResponse(call: Call<Post>, response: Response<Post>) {
