@@ -34,8 +34,12 @@ class MainActivity : AppCompatActivity() {
         // as you specify a parent activity in AndroidManifest.xml.
         var view:View
         return when (item.itemId) {
-            R.id.action_settings -> {
-                Snackbar.make(window.decorView.findViewById(android.R.id.content),"settings",Snackbar.LENGTH_LONG).setAction("Action",null).show()
+            R.id.action_name -> {
+                Snackbar.make(window.decorView.findViewById(android.R.id.content),"D.M.J.L.Maduranga Bandara",Snackbar.LENGTH_LONG).setAction("Action",null).show()
+                true
+            }
+            R.id.action_stnumber -> {
+                Snackbar.make(window.decorView.findViewById(android.R.id.content),"SE/2017/001",Snackbar.LENGTH_LONG).setAction("Action",null).show()
                 true
             }
             else -> super.onOptionsItemSelected(item)
